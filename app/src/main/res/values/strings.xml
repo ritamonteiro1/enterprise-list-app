@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Empresas</string>
+    <string name="main_logo_content_description">Logotipo da Ioasys</string>
+    <string name="main_welcome_content_description">Bem-vindo ao Empresas</string>
+    <string name="main_presentation">Lorem ipsum dolor sit amet, contetur adipiscing elit. Nunc accumsan.</string>
+    <string name="main_email">E-mail</string>
+    <string name="main_password">Senha</string>
+    <string name="main_login">Entrar</string>
+    <string name="fill_the_field">Preencha o campo</string>
+    <string name="incorrect_email">Preencha o campo no formato de E-mail. Ex: abc@abc.com.br</string>
+    <string name="research_information">Clique na busca para iniciar.</string>
+    <string name="company_one">Empresa 1</string>
+    <string name="company_two">Empresa 2</string>
+    <string name="company_three">Empresa 3</string>
+    <string name="company_four">Empresa 4</string>
+    <string name="company_five">Empresa 5</string>
+    <string name="company_six">Empresa 6</string>
+    <string name="company_seven">Empresa 7</string>
+    <string name="business">Negócio</string>
+    <string name="country">País</string>
+    <string name="img_company">Imagem da Empresa</string>
+    <string name="company_name">Empresa</string>
+    <string name="item_country">Brasil</string>
+    <string name="search">Pesquisar</string>
+    <string name="search_view">Pesquisar</string>
+    <string name="company_image">Imagem da empresa</string>
+    <string name="error_email_password">Credenciais inválidas. Tente novamente.</string>
+    <string name="alert_dialog_text">OK</string>
+    <string name="error_connection_fail">Falha na conexão com a internet, tente novamente.</string>
+    <string name="blank_space">\" \"</string>
+    <string name="ocurred_error">Ocorreu um erro. Tente novamente mais tarde.</string>
+    <string name="empty_list_error_message">Não foram encontrados resultados para esta pesquisa.</string>
+</resources>
