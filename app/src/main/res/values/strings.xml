@@ -1,12 +1,25 @@
 <resources>
+    <!--    AndroidManifest.xml-->
     <string name="app_name">Empresas</string>
+    <!--    LoginActivity-->
+    <!--    MainActivity-->
+    <!--    ResultActivity-->
+    <!--    activity_login.xml-->
+    <!--    activity_main.xml-->
+    <!--    activity_result.xml-->
+    <!--    item_company.xml-->
+    <!--    generics error -->
+    <string name="fill_the_field">Preencha o campo</string>
+
+
+
+
     <string name="main_logo_content_description">Logotipo da Ioasys</string>
     <string name="main_welcome_content_description">Bem-vindo ao Empresas</string>
     <string name="main_presentation">Lorem ipsum dolor sit amet, contetur adipiscing elit. Nunc accumsan.</string>
     <string name="main_email">E-mail</string>
     <string name="main_password">Senha</string>
     <string name="main_login">Entrar</string>
-    <string name="fill_the_field">Preencha o campo</string>
     <string name="incorrect_email">Preencha o campo no formato de E-mail. Ex: abc@abc.com.br</string>
     <string name="research_information">Clique na busca para iniciar.</string>
     <string name="company_one">Empresa 1</string>

@@ -5,14 +5,15 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import com.example.enterprises.R
-import com.google.android.material.textfield.TextInputEditText
+import com.example.enterprises.extensions.Extensions.Companion.isEmptyField
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
     private var loginEmailEditText: EditText? = null
     private var loginPasswordEditText: EditText? = null
     private var loginButton: Button? = null
-    private var loginEmailTextInputLayout: TextInputEditText? = null
-    private var loginPasswordTextInputLayout: TextInputEditText? = null
+    private var loginEmailTextInputLayout: TextInputLayout? = null
+    private var loginPasswordTextInputLayout: TextInputLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupLoginButton() {
         loginButton?.setOnClickListener {
-                var isEmptyLoginField: Boolean = loginEmailEditText.
+            val isEmptyLoginField: Boolean = loginEmailEditText.isEmptyField(loginEmailTextInputLayout, this)
+            val isEmptyPasswordField: Boolean = loginPasswordEditText.isEmptyField(loginPasswordTextInputLayout, this)
+
         }
     }
 

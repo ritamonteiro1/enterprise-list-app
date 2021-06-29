@@ -1,5 +1,8 @@
 package com.example.enterprises.constants
 
 class Constants {
-    const val EMPTY = ""
+    companion object {
+        const val EMPTY = ""
+        const val BLANK_SPACE = " "
+    }
 }
