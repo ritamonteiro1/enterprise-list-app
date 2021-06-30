@@ -3,6 +3,10 @@
     <string name="app_name">Empresas</string>
     <!--    LoginActivity-->
     <string name="error_email_password">Credenciais inválidas. Tente novamente.</string>
+    <!--    MainActivity-->
+
+    <!--    ResultActivity-->
+
     <!--    activity_login.xml-->
     <string name="main_logo_content_description">Logotipo da Ioasys</string>
     <string name="main_welcome_content_description">Bem-vindo ao Empresas</string>
@@ -25,7 +29,6 @@
     <string name="alert_dialog_text">OK</string>
     <!--    Generics Error -->
     <string name="error_connection_fail">Falha na conexão com a internet, tente novamente.</string>
-    <string name="blank_space">\" \"</string>
     <string name="ocurred_error">Ocorreu um erro. Tente novamente mais tarde.</string>
     <string name="empty_list_error_message">Não foram encontrados resultados para esta pesquisa.</string>
 </resources>

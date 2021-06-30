@@ -65,8 +65,8 @@ class LoginActivity : AppCompatActivity() {
                         moveToMainActivity(accessToken, uid, client)
                     }
                     response.code() == HttpURLConnection.HTTP_UNAUTHORIZED -> {
-                        loginEmailTextInputLayout!!.error = Constants.BLANK_SPACE
-                        loginPasswordTextInputLayout!!.error =
+                        loginEmailTextInputLayout?.error = Constants.BLANK_SPACE
+                        loginPasswordTextInputLayout?.error =
                             getString(R.string.error_email_password)
                     }
                     else -> {
