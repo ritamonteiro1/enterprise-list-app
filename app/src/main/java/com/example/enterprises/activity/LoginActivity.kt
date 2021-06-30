@@ -107,8 +107,8 @@ class LoginActivity : AppCompatActivity() {
         loginPasswordTextInputLayout = findViewById(R.id.loginPasswordTextInputLayout)
     }
 
-    private fun String?.isValidEmail(textInputLayout: TextInputLayout?, context: Context): Boolean {
-        return if (this!!.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()) {
+    private fun String.isValidEmail(textInputLayout: TextInputLayout?, context: Context): Boolean {
+        return if (this.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()) {
             textInputLayout?.error = Constants.EMPTY
             true
         } else if (this.isEmpty()) {
