@@ -26,3 +26,7 @@ fun ImageView.downloadImage(baseImageUrl: String, context: Context) {
 fun View.visibilityGone() {
     this.visibility = View.GONE
 }
+
+fun View.visibilityVisible() {
+    this.visibility = View.VISIBLE
+}
