@@ -1,8 +1,8 @@
 package com.example.enterprises.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enterprises.R
@@ -16,6 +16,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewsById()
+        setupToolBar()
+    }
+
+    private fun setupToolBar() {
+        setSupportActionBar(mainToolBar)
+        supportActionBar?.setLogo(R.drawable.img_logo_nav)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
     }
 
     private fun findViewsById() {
