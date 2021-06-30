@@ -1,6 +1,7 @@
 package com.example.enterprises.extensions
 
 import android.content.Context
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -20,4 +21,8 @@ fun EditText.isEmptyField(textInputLayout: TextInputLayout?, context: Context): 
 
 fun ImageView.downloadImage(baseImageUrl: String, context: Context) {
     Glide.with(context).load(baseImageUrl).into(this)
+}
+
+fun View.visibilityGone() {
+    this.visibility = View.GONE
 }

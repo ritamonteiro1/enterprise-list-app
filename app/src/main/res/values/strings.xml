@@ -4,7 +4,7 @@
     <!--    LoginActivity-->
     <string name="error_email_password">Credenciais inválidas. Tente novamente.</string>
     <!--    MainActivity-->
-
+    <string name="search">Pesquisar</string>
     <!--    ResultActivity-->
 
     <!--    activity_login.xml-->
