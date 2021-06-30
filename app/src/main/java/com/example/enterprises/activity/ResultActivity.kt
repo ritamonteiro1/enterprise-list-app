@@ -2,6 +2,7 @@ package com.example.enterprises.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -17,6 +18,14 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
         findViewsById()
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun findViewsById() {
