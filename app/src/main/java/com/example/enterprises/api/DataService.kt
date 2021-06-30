@@ -1,6 +1,6 @@
 package com.example.enterprises.api
 
-import com.example.enterprises.domains.UserRequest
+import com.example.enterprises.domains.user.UserRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

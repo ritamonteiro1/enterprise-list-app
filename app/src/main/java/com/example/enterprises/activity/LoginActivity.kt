@@ -9,7 +9,7 @@ import com.example.enterprises.R
 import com.example.enterprises.api.Api
 import com.example.enterprises.api.DataService
 import com.example.enterprises.constants.Constants
-import com.example.enterprises.domains.UserRequest
+import com.example.enterprises.domains.user.UserRequest
 import com.example.enterprises.extensions.Extensions.Companion.isEmptyField
 import com.example.enterprises.extensions.Extensions.Companion.isValidEmail
 import com.example.enterprises.utils.Utils
