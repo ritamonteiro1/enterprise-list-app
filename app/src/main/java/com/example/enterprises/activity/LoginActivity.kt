@@ -1,7 +1,9 @@
 package com.example.enterprises.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +12,7 @@ import com.example.enterprises.api.Api
 import com.example.enterprises.api.DataService
 import com.example.enterprises.constants.Constants
 import com.example.enterprises.domains.user.UserRequest
-import com.example.enterprises.extensions.Extensions.Companion.isEmptyField
-import com.example.enterprises.extensions.Extensions.Companion.isValidEmail
+import com.example.enterprises.extensions.isEmptyField
 import com.example.enterprises.utils.Utils
 import com.google.android.material.textfield.TextInputLayout
 import okhttp3.ResponseBody
@@ -39,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
             val isEmptyPasswordField: Boolean =
                 loginPasswordEditText.isEmptyField(loginPasswordTextInputLayout, this)
             val isValidEmail: Boolean =
-                loginEmailEditText.isValidEmail(loginEmailTextInputLayout, this)
+                loginEmailEditText?.text.toString().isValidEmail(loginEmailTextInputLayout, this)
             if (isEmptyPasswordField || !isValidEmail)
                 return@setOnClickListener
             val userRequest = UserRequest(
@@ -104,5 +105,18 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         loginEmailTextInputLayout = findViewById(R.id.loginEmailTextInputLayout)
         loginPasswordTextInputLayout = findViewById(R.id.loginPasswordTextInputLayout)
+    }
+
+    private fun String?.isValidEmail(textInputLayout: TextInputLayout?, context: Context): Boolean {
+        return if (this!!.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()) {
+            textInputLayout?.error = Constants.EMPTY
+            true
+        } else if (this.isEmpty()) {
+            textInputLayout?.error = context.getString(R.string.fill_the_field)
+            false
+        } else {
+            textInputLayout?.error = context.getString(R.string.incorrect_email)
+            false
+        }
     }
 }
