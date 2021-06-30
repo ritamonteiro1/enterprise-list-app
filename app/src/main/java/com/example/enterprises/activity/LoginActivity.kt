@@ -1,6 +1,5 @@
 package com.example.enterprises.activity
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -27,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
     private var loginButton: Button? = null
     private var loginEmailTextInputLayout: TextInputLayout? = null
     private var loginPasswordTextInputLayout: TextInputLayout? = null
-    private var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 loginEmailEditText?.text.toString(),
                 loginPasswordEditText?.text.toString()
             )
-            Utils.showProgressDialog(progressDialog, this)
+            Utils.setAlertDialog(true, this@LoginActivity)
             val dataService: DataService = Api.setupRetrofit()!!.create(DataService::class.java)
             val call: Call<ResponseBody> = dataService.recoverVerifyLogin(userRequest)
             doLogin(call)
@@ -58,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
     private fun doLogin(call: Call<ResponseBody>) {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                progressDialog!!.dismiss()
+                Utils.setAlertDialog(false, this@LoginActivity)
                 when {
                     response.isSuccessful -> {
                         val accessToken = response.headers()[Constants.HEADER_ACCESS_TOKEN]
@@ -81,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                progressDialog!!.dismiss()
+                Utils.setAlertDialog(false, this@LoginActivity)
                 Utils.createErrorDialog(
                     getString(R.string.error_connection_fail),
                     this@LoginActivity

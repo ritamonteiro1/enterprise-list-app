@@ -1,19 +1,20 @@
 package com.example.enterprises.utils
 
-import android.app.ProgressDialog
+import android.app.Dialog
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.example.enterprises.R
 
+
 class Utils {
     companion object {
-        fun showProgressDialog(progressDialog: ProgressDialog?, context: Context) {
-            val progressDialog = ProgressDialog(context)
-            progressDialog.show()
-            progressDialog.setContentView(R.layout.progress_dialog)
-            progressDialog.setCanceledOnTouchOutside(false)
-            progressDialog.setCancelable(false)
-            progressDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        fun setAlertDialog(show: Boolean, context: Context) {
+            val builder = AlertDialog.Builder(context)
+            builder.setView(R.layout.progress_dialog)
+            val dialog: Dialog = builder.create()
+            if (show) dialog.show() else dialog.dismiss()
+            dialog.setCancelable(false)
+            dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         }
 
         fun createErrorDialog(message: String?, context: Context) {
