@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setupLoginButton() {
         loginButton?.setOnClickListener {
             val isEmptyPasswordField: Boolean =
-                loginPasswordEditText.isEmptyField(loginPasswordTextInputLayout, this)
+                loginPasswordEditText!!.isEmptyField(loginPasswordTextInputLayout, this)
             val isValidEmail: Boolean =
                 loginEmailEditText?.text.toString().isValidEmail(loginEmailTextInputLayout, this)
             if (isEmptyPasswordField || !isValidEmail)

@@ -56,6 +56,7 @@ class EnterpriseListAdapter(
                 Constants.BASE_IMAGE_URL + enterpriseResponse?.photo,
                 context
             )
+
         }
     }
 }
