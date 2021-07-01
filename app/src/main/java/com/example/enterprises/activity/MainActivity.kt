@@ -1,5 +1,6 @@
 package com.example.enterprises.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.SearchView
@@ -12,6 +13,7 @@ import com.example.enterprises.R
 import com.example.enterprises.adapter.EnterpriseListAdapter
 import com.example.enterprises.api.Api
 import com.example.enterprises.api.DataService
+import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
 import com.example.enterprises.constants.Constants
 import com.example.enterprises.domains.enterprise.EnterpriseListResponse
 import com.example.enterprises.domains.enterprise.EnterpriseResponse
@@ -92,8 +94,20 @@ class MainActivity : AppCompatActivity() {
         val enterpriseListResponse: EnterpriseListResponse = response.body()!!
         treatEnterpriseListEmpty(enterpriseListResponse.enterprises)
         val enterpriseListAdapter =
-            EnterpriseListAdapter(enterpriseListResponse.enterprises, this@MainActivity)
+            EnterpriseListAdapter(
+                enterpriseListResponse.enterprises,
+                this@MainActivity,
+                onEnterpriseItemClickListener(enterpriseListResponse.enterprises)
+            )
         setupRecyclerView(enterpriseListAdapter)
+    }
+
+    private fun onEnterpriseItemClickListener(enterprises: List<EnterpriseResponse>): OnEnterpriseItemClickListener {
+//        val intent = Intent(
+//            this,
+//            ResultActivity::class.java
+//        ).apply { putExtra(Constants.ENTERPRISE_RESPONSE_DETAILS, enterprises) }
+//        startActivity(intent)
     }
 
     private fun setupRecyclerView(enterpriseListAdapter: EnterpriseListAdapter) {

@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.example.enterprises.R
+import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
+import com.example.enterprises.domains.enterprise.EnterpriseResponse
 
 class ResultActivity : AppCompatActivity() {
     private var resultEnterpriseImageView: ImageView? = null
@@ -17,6 +19,7 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         findViewsById()
+        //var enterpriseResponse =
 
     }
 

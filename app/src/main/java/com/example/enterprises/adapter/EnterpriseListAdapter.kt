@@ -8,13 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.enterprises.R
+import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
 import com.example.enterprises.constants.Constants
 import com.example.enterprises.domains.enterprise.EnterpriseResponse
 import com.example.enterprises.extensions.downloadImage
 
 class EnterpriseListAdapter(
     private val enterprises: List<EnterpriseResponse?>,
-    private val context: Context
+    private val context: Context,
+    private val onEnterpriseItemClickListener: OnEnterpriseItemClickListener
 ) : RecyclerView.Adapter<EnterpriseListAdapter.EnterpriseListViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -30,7 +32,7 @@ class EnterpriseListAdapter(
     }
 
     override fun onBindViewHolder(holder: EnterpriseListViewHolder, position: Int) {
-        holder.bind(enterprises[position], context)
+        holder.bind(enterprises[position], context, onEnterpriseItemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -47,7 +49,11 @@ class EnterpriseListAdapter(
         private val itemEnterpriseCountryTextView: TextView =
             itemView.findViewById(R.id.itemEnterpriseCountryTextView)
 
-        fun bind(enterpriseResponse: EnterpriseResponse?, context: Context) {
+        fun bind(
+            enterpriseResponse: EnterpriseResponse?,
+            context: Context,
+            onEnterpriseItemClickListener: OnEnterpriseItemClickListener
+        ) {
             itemEnterpriseCountryTextView.text = enterpriseResponse?.country
             itemEnterpriseTypeTextView.text =
                 enterpriseResponse?.enterpriseTypeResponse?.enterpriseTypeName
@@ -56,8 +62,7 @@ class EnterpriseListAdapter(
                 Constants.BASE_IMAGE_URL + enterpriseResponse?.photo,
                 context
             )
-            itemView.setOnClickListener {  }
-
+            itemView.setOnClickListener { onEnterpriseItemClickListener.onClick(enterpriseResponse) }
         }
     }
 }

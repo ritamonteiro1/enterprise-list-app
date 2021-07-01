@@ -1,6 +1,7 @@
 package com.example.enterprises.domains.enterprise
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class EnterpriseResponse(
     @SerializedName("enterprise_name") val enterpriseName: String? = null,
@@ -8,4 +9,4 @@ data class EnterpriseResponse(
     val description: String? = null,
     val country: String? = null,
     @SerializedName("enterprise_type") val enterpriseTypeResponse: EnterpriseTypeResponse? = null
-)
+): Serializable
