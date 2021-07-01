@@ -2,13 +2,16 @@ package com.example.enterprises.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.example.enterprises.R
 import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
+import com.example.enterprises.constants.Constants
 import com.example.enterprises.domains.enterprise.EnterpriseResponse
+import java.io.Serializable
 
 class ResultActivity : AppCompatActivity() {
     private var resultEnterpriseImageView: ImageView? = null
@@ -19,8 +22,12 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         findViewsById()
-        //var enterpriseResponse =
+        var enterpriseResponse = retrieverEnterpriseResponse()
 
+    }
+
+    private fun retrieverEnterpriseResponse(): Serializable? {
+            return intent.getSerializableExtra(Constants.ENTERPRISE_RESPONSE_DETAILS)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

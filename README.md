@@ -1,5 +1,4 @@
-Este é o meu aplicativo mais completo. Fiz ele me baseando no desafio em Android da empresa ioasys (https://bitbucket.org/ioasys/empresas-android/src/master/). 
-Ele é composto por 3 telas:
+Este é o meu aplicativo mais completo. Fiz ele me baseando no desafio em Android da empresa ioasys (https://bitbucket.org/ioasys/empresas-android/src/master/) Ele é composto por 3 telas:
 
 1. Tela login: 
 Para fazer login no aplicativo utilize o email: testeapple@ioasys.com.br e senha: 12341234. 
