@@ -18,7 +18,7 @@
         android:gravity="center_horizontal"
         android:letterSpacing="-0.01"
         android:lineSpacingExtra="3.5sp"
-        android:text="@string/research_information"
+        android:text="@string/main_information_text"
         android:textColor="@color/charcoal_grey"
         android:textSize="16sp"
         android:textStyle="normal"

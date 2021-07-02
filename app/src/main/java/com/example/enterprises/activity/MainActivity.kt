@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         val menuItem = menu!!.findItem(R.id.search)
         val searchView: SearchView = menuItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.search)
+        searchView.queryHint = getString(R.string.main_query_hint_menu_search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -77,14 +77,14 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     mainInformationTextView?.visibilityVisible()
                     mainRecyclerView?.visibilityGone()
-                    mainInformationTextView?.text = getString(R.string.ocurred_error)
+                    mainInformationTextView?.text = getString(R.string.occurred_error)
                 }
             }
 
             override fun onFailure(call: Call<EnterpriseListResponse?>, t: Throwable) {
                 mainInformationTextView?.visibilityVisible()
                 mainRecyclerView?.visibilityGone()
-                mainInformationTextView?.text = getString(R.string.ocurred_error)
+                mainInformationTextView?.text = getString(R.string.occurred_error)
             }
         })
     }

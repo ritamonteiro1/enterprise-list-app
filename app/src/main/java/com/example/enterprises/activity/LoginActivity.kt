@@ -68,11 +68,11 @@ class LoginActivity : AppCompatActivity() {
                     response.code() == HttpURLConnection.HTTP_UNAUTHORIZED -> {
                         loginEmailTextInputLayout?.error = Constants.BLANK_SPACE
                         loginPasswordTextInputLayout?.error =
-                            getString(R.string.error_email_password)
+                            getString(R.string.login_error_email_password)
                     }
                     else -> {
                         Utils.createErrorDialog(
-                            getString(R.string.ocurred_error),
+                            getString(R.string.occurred_error),
                             this@LoginActivity
                         )
                     }
@@ -85,7 +85,6 @@ class LoginActivity : AppCompatActivity() {
                     getString(R.string.error_connection_fail),
                     this@LoginActivity
                 )
-
             }
         }
         )
