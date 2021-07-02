@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        val menuItem = menu!!.findItem(R.id.search)
-        val searchView: SearchView = menuItem.actionView as SearchView
+        val menuItem = menu?.findItem(R.id.search)
+        val searchView: SearchView = menuItem?.actionView as SearchView
         searchView.queryHint = getString(R.string.main_query_hint_menu_search)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -57,17 +57,17 @@ class MainActivity : AppCompatActivity() {
         val accessToken = intent.getStringExtra(Constants.HEADER_ACCESS_TOKEN)
         val uid = intent.getStringExtra(Constants.HEADER_UID)
         val client = intent.getStringExtra(Constants.HEADER_CLIENT)
-        val dataService: DataService = Api.setupRetrofit()!!.create(DataService::class.java)
-        val call: Call<EnterpriseListResponse?> = dataService.recoverEnterpriseListResponse(
+        val dataService: DataService? = Api.setupRetrofit()?.create(DataService::class.java)
+        val call: Call<EnterpriseListResponse?>? = dataService?.recoverEnterpriseListResponse(
             newText,
             accessToken, client, uid
         )
-        mainInformationTextView!!.visibilityGone()
+        mainInformationTextView?.visibilityGone()
         getEnterpriseResponse(call)
     }
 
-    private fun getEnterpriseResponse(call: Call<EnterpriseListResponse?>) {
-        call.enqueue(object : Callback<EnterpriseListResponse?> {
+    private fun getEnterpriseResponse(call: Call<EnterpriseListResponse?>?) {
+        call?.enqueue(object : Callback<EnterpriseListResponse?> {
             override fun onResponse(
                 call: Call<EnterpriseListResponse?>,
                 response: Response<EnterpriseListResponse?>
@@ -91,11 +91,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun getEnterpriseResponseSuccessfully(response: Response<EnterpriseListResponse?>) {
         mainRecyclerView?.visibilityVisible()
-        val enterpriseListResponse: EnterpriseListResponse = response.body()!!
-        treatEnterpriseListEmpty(enterpriseListResponse.enterprises)
+        val enterpriseListResponse: EnterpriseListResponse? = response.body()
+        treatEnterpriseListEmpty(enterpriseListResponse?.enterprises)
         val enterpriseListAdapter =
             EnterpriseListAdapter(
-                enterpriseListResponse.enterprises,
+                enterpriseListResponse?.enterprises,
                 this@MainActivity,
                 object : OnEnterpriseItemClickListener {
                     override fun onClick(enterpriseResponse: EnterpriseResponse?) {
@@ -115,8 +115,8 @@ class MainActivity : AppCompatActivity() {
         mainRecyclerView?.layoutManager = layoutManager
     }
 
-    private fun treatEnterpriseListEmpty(enterprises: List<EnterpriseResponse>) {
-        if (enterprises.isEmpty()) {
+    private fun treatEnterpriseListEmpty(enterprises: List<EnterpriseResponse>?) {
+        if (enterprises?.isEmpty() == true) {
             mainInformationTextView?.text = getString(R.string.empty_list_error_message)
             mainInformationTextView?.visibilityVisible()
         }

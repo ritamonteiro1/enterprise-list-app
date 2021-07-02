@@ -40,25 +40,25 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupLoginButton() {
         loginButton?.setOnClickListener {
-            val isEmptyPasswordField: Boolean =
-                loginPasswordEditText!!.isEmptyField(loginPasswordTextInputLayout, this)
+            val isEmptyPasswordField: Boolean? =
+                loginPasswordEditText?.isEmptyField(loginPasswordTextInputLayout, this)
             val isValidEmail: Boolean =
                 loginEmailEditText?.text.toString().isValidEmail(loginEmailTextInputLayout, this)
-            if (isEmptyPasswordField || !isValidEmail)
+            if (isEmptyPasswordField == true || !isValidEmail)
                 return@setOnClickListener
             val userRequest = UserRequest(
                 loginEmailEditText?.text.toString(),
                 loginPasswordEditText?.text.toString()
             )
             dialog?.show()
-            val dataService: DataService = Api.setupRetrofit()!!.create(DataService::class.java)
-            val call: Call<ResponseBody> = dataService.recoverVerifyLogin(userRequest)
+            val dataService: DataService? = Api.setupRetrofit()?.create(DataService::class.java)
+            val call: Call<ResponseBody>? = dataService?.recoverVerifyLogin(userRequest)
             doLogin(call)
         }
     }
 
-    private fun doLogin(call: Call<ResponseBody>) {
-        call.enqueue(object : Callback<ResponseBody> {
+    private fun doLogin(call: Call<ResponseBody>?) {
+        call?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 dialog?.dismiss()
                 when {

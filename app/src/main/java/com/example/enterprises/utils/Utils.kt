@@ -13,7 +13,7 @@ class Utils {
             builder.setView(R.layout.progress_dialog)
             val dialog: Dialog = builder.create()
             dialog.setCancelable(false)
-            dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             return dialog
         }
 

@@ -14,7 +14,7 @@ import com.example.enterprises.domains.enterprise.EnterpriseResponse
 import com.example.enterprises.extensions.downloadImage
 
 class EnterpriseListAdapter(
-    private val enterprises: List<EnterpriseResponse?>,
+    private val enterprises: List<EnterpriseResponse>?,
     private val context: Context,
     private val onEnterpriseItemClickListener: OnEnterpriseItemClickListener
 ) : RecyclerView.Adapter<EnterpriseListAdapter.EnterpriseListViewHolder>() {
@@ -32,11 +32,11 @@ class EnterpriseListAdapter(
     }
 
     override fun onBindViewHolder(holder: EnterpriseListViewHolder, position: Int) {
-        holder.bind(enterprises[position], context, onEnterpriseItemClickListener)
+        holder.bind(enterprises?.get(position), context, onEnterpriseItemClickListener)
     }
 
-    override fun getItemCount(): Int {
-        return enterprises.size
+    override fun getItemCount(): Int? {
+        return enterprises?.size
     }
 
     class EnterpriseListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
