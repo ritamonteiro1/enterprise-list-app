@@ -1,5 +1,6 @@
 package com.example.enterprises.activity
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -27,10 +28,12 @@ class LoginActivity : AppCompatActivity() {
     private var loginButton: Button? = null
     private var loginEmailTextInputLayout: TextInputLayout? = null
     private var loginPasswordTextInputLayout: TextInputLayout? = null
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        dialog = Utils.setAlertDialog(this)
         findViewsById()
         setupLoginButton()
     }
@@ -47,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 loginEmailEditText?.text.toString(),
                 loginPasswordEditText?.text.toString()
             )
-            Utils.setAlertDialog(true, this@LoginActivity)
+            dialog?.show()
             val dataService: DataService = Api.setupRetrofit()!!.create(DataService::class.java)
             val call: Call<ResponseBody> = dataService.recoverVerifyLogin(userRequest)
             doLogin(call)
@@ -57,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
     private fun doLogin(call: Call<ResponseBody>) {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Utils.setAlertDialog(false, this@LoginActivity)
+                dialog?.dismiss()
                 when {
                     response.isSuccessful -> {
                         val accessToken = response.headers()[Constants.HEADER_ACCESS_TOKEN]
@@ -80,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Utils.setAlertDialog(false, this@LoginActivity)
+                dialog?.dismiss()
                 Utils.createErrorDialog(
                     getString(R.string.error_connection_fail),
                     this@LoginActivity

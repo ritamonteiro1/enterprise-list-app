@@ -8,13 +8,13 @@ import com.example.enterprises.R
 
 class Utils {
     companion object {
-        fun setAlertDialog(show: Boolean, context: Context) {
+        fun setAlertDialog(context: Context): Dialog {
             val builder = AlertDialog.Builder(context)
             builder.setView(R.layout.progress_dialog)
             val dialog: Dialog = builder.create()
-            if (show) dialog.show() else dialog.dismiss()
             dialog.setCancelable(false)
             dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            return dialog
         }
 
         fun createErrorDialog(message: String?, context: Context) {
