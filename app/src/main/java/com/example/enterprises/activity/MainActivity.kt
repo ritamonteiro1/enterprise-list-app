@@ -97,17 +97,14 @@ class MainActivity : AppCompatActivity() {
             EnterpriseListAdapter(
                 enterpriseListResponse.enterprises,
                 this@MainActivity,
-                onEnterpriseItemClickListener(enterpriseListResponse.enterprises)
-            )
+                object : OnEnterpriseItemClickListener {
+                    override fun onClick(enterpriseResponse: EnterpriseResponse?) {
+                        val intent = Intent(this@MainActivity, ResultActivity::class.java)
+                        intent.putExtra(Constants.ENTERPRISE_RESPONSE_DETAILS, enterpriseResponse)
+                        startActivity(intent)
+                    }
+                })
         setupRecyclerView(enterpriseListAdapter)
-    }
-
-    private fun onEnterpriseItemClickListener(enterprises: List<EnterpriseResponse>): OnEnterpriseItemClickListener {
-//        val intent = Intent(
-//            this,
-//            ResultActivity::class.java
-//        ).apply { putExtra(Constants.ENTERPRISE_RESPONSE_DETAILS, enterprises) }
-//        startActivity(intent)
     }
 
     private fun setupRecyclerView(enterpriseListAdapter: EnterpriseListAdapter) {

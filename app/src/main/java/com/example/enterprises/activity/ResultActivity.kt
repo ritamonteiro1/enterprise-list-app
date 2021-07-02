@@ -1,17 +1,15 @@
 package com.example.enterprises.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.enterprises.R
-import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
 import com.example.enterprises.constants.Constants
 import com.example.enterprises.domains.enterprise.EnterpriseResponse
-import java.io.Serializable
+import com.example.enterprises.extensions.downloadImage
 
 class ResultActivity : AppCompatActivity() {
     private var resultEnterpriseImageView: ImageView? = null
@@ -22,12 +20,27 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         findViewsById()
-        var enterpriseResponse = retrieverEnterpriseResponse()
-
+        val enterpriseResponse = retrieverEnterpriseResponse()
+        setupToolBar(enterpriseResponse.enterpriseName)
+        showEnterpriseDetails(enterpriseResponse)
     }
 
-    private fun retrieverEnterpriseResponse(): Serializable? {
-            return intent.getSerializableExtra(Constants.ENTERPRISE_RESPONSE_DETAILS)
+    private fun showEnterpriseDetails(enterpriseResponse: EnterpriseResponse) {
+        resultEnterpriseImageView?.downloadImage(
+            Constants.BASE_IMAGE_URL + enterpriseResponse.photo,
+            this
+        )
+        resultDescriptionEnterpriseTextView?.text = enterpriseResponse.description
+    }
+
+    private fun setupToolBar(enterpriseName: String?) {
+        setSupportActionBar(resultToolBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = enterpriseName
+    }
+
+    private fun retrieverEnterpriseResponse(): EnterpriseResponse {
+        return intent.getSerializableExtra(Constants.ENTERPRISE_RESPONSE_DETAILS) as EnterpriseResponse
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
