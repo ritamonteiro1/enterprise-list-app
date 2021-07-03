@@ -14,9 +14,9 @@ interface DataService {
 
     @GET("enterprises")
     fun recoverEnterpriseListResponse(
-        @Query(Constants.ENTERPRISE_NAME) enterpriseName: String?,
-        @Header("access-token") accessToken: String?,
-        @Header("client") client: String?,
-        @Header("uid") uid: String?
-    ): Call<EnterpriseListResponse?>
+        @Query(Constants.ENTERPRISE_NAME) enterpriseName: String,
+        @Header("access-token") accessToken: String,
+        @Header("client") client: String,
+        @Header("uid") uid: String
+    ): Call<EnterpriseListResponse>
 }

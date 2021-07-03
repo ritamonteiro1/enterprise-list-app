@@ -27,8 +27,7 @@ class ResultActivity : AppCompatActivity() {
 
     private fun showEnterpriseDetails(enterpriseResponse: EnterpriseResponse) {
         resultEnterpriseImageView?.downloadImage(
-            Constants.BASE_IMAGE_URL + enterpriseResponse.photo,
-            this
+            Constants.BASE_IMAGE_URL + enterpriseResponse.photo
         )
         resultDescriptionEnterpriseTextView?.text = enterpriseResponse.description
     }

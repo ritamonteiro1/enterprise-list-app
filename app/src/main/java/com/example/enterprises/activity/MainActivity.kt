@@ -17,8 +17,8 @@ import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
 import com.example.enterprises.constants.Constants
 import com.example.enterprises.domains.enterprise.EnterpriseListResponse
 import com.example.enterprises.domains.enterprise.EnterpriseResponse
-import com.example.enterprises.extensions.visibilityGone
-import com.example.enterprises.extensions.visibilityVisible
+import com.example.enterprises.extensions.setGone
+import com.example.enterprises.extensions.setVisible
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,57 +46,56 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                queryTextChangeInSearchMenu(newText)
+                queryTextChangeInSearchMenu(newText.orEmpty())
                 return true
             }
         })
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun queryTextChangeInSearchMenu(newText: String?) {
-        val accessToken = intent.getStringExtra(Constants.HEADER_ACCESS_TOKEN)
-        val uid = intent.getStringExtra(Constants.HEADER_UID)
-        val client = intent.getStringExtra(Constants.HEADER_CLIENT)
-        val dataService: DataService? = Api.setupRetrofit()?.create(DataService::class.java)
-        val call: Call<EnterpriseListResponse?>? = dataService?.recoverEnterpriseListResponse(
+    private fun queryTextChangeInSearchMenu(newText: String) {
+        val accessToken = intent.getStringExtra(Constants.HEADER_ACCESS_TOKEN).orEmpty()
+        val uid = intent.getStringExtra(Constants.HEADER_UID).orEmpty()
+        val client = intent.getStringExtra(Constants.HEADER_CLIENT).orEmpty()
+        val dataService: DataService = Api.setupRetrofit().create(DataService::class.java)
+        val call: Call<EnterpriseListResponse> = dataService.recoverEnterpriseListResponse(
             newText,
             accessToken, client, uid
         )
-        mainInformationTextView?.visibilityGone()
+        mainInformationTextView?.setGone()
         getEnterpriseResponse(call)
     }
 
-    private fun getEnterpriseResponse(call: Call<EnterpriseListResponse?>?) {
-        call?.enqueue(object : Callback<EnterpriseListResponse?> {
+    private fun getEnterpriseResponse(call: Call<EnterpriseListResponse>) {
+        call.enqueue(object : Callback<EnterpriseListResponse> {
             override fun onResponse(
-                call: Call<EnterpriseListResponse?>,
-                response: Response<EnterpriseListResponse?>
+                call: Call<EnterpriseListResponse>,
+                response: Response<EnterpriseListResponse>
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     getEnterpriseResponseSuccessfully(response)
                 } else {
-                    mainInformationTextView?.visibilityVisible()
-                    mainRecyclerView?.visibilityGone()
+                    mainInformationTextView?.setVisible()
+                    mainRecyclerView?.setGone()
                     mainInformationTextView?.text = getString(R.string.occurred_error)
                 }
             }
 
             override fun onFailure(call: Call<EnterpriseListResponse?>, t: Throwable) {
-                mainInformationTextView?.visibilityVisible()
-                mainRecyclerView?.visibilityGone()
+                mainInformationTextView?.setVisible()
+                mainRecyclerView?.setGone()
                 mainInformationTextView?.text = getString(R.string.occurred_error)
             }
         })
     }
 
-    private fun getEnterpriseResponseSuccessfully(response: Response<EnterpriseListResponse?>) {
-        mainRecyclerView?.visibilityVisible()
+    private fun getEnterpriseResponseSuccessfully(response: Response<EnterpriseListResponse>) {
+        mainRecyclerView?.setVisible()
         val enterpriseListResponse: EnterpriseListResponse? = response.body()
         treatEnterpriseListEmpty(enterpriseListResponse?.enterprises)
         val enterpriseListAdapter =
             EnterpriseListAdapter(
                 enterpriseListResponse?.enterprises,
-                this@MainActivity,
                 object : OnEnterpriseItemClickListener {
                     override fun onClick(enterpriseResponse: EnterpriseResponse?) {
                         val intent = Intent(this@MainActivity, ResultActivity::class.java)
@@ -118,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     private fun treatEnterpriseListEmpty(enterprises: List<EnterpriseResponse>?) {
         if (enterprises?.isEmpty() == true) {
             mainInformationTextView?.text = getString(R.string.empty_list_error_message)
-            mainInformationTextView?.visibilityVisible()
+            mainInformationTextView?.setVisible()
         }
     }
 

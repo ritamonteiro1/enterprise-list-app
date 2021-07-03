@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class EnterpriseResponse(
-    @SerializedName("enterprise_name") val enterpriseName: String? = null,
-    val photo: String? = null,
-    val description: String? = null,
-    val country: String? = null,
-    @SerializedName("enterprise_type") val enterpriseTypeResponse: EnterpriseTypeResponse? = null
+    @SerializedName("enterprise_name") val enterpriseName: String?,
+    val photo: String?,
+    val description: String?,
+    val country: String?,
+    @SerializedName("enterprise_type") val enterpriseTypeResponse: EnterpriseTypeResponse?
 ): Serializable

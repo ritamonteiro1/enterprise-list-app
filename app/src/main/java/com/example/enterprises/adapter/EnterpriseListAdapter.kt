@@ -1,6 +1,5 @@
 package com.example.enterprises.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +14,8 @@ import com.example.enterprises.extensions.downloadImage
 
 class EnterpriseListAdapter(
     private val enterprises: List<EnterpriseResponse>?,
-    private val context: Context,
     private val onEnterpriseItemClickListener: OnEnterpriseItemClickListener
 ) : RecyclerView.Adapter<EnterpriseListAdapter.EnterpriseListViewHolder>() {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -32,14 +29,14 @@ class EnterpriseListAdapter(
     }
 
     override fun onBindViewHolder(holder: EnterpriseListViewHolder, position: Int) {
-        holder.bind(enterprises?.get(position), context, onEnterpriseItemClickListener)
+        holder.bind(enterprises?.get(position), onEnterpriseItemClickListener)
     }
 
-    override fun getItemCount(): Int? {
-        return enterprises?.size
+    override fun getItemCount(): Int {
+        return enterprises?.size ?: 0
     }
 
-    class EnterpriseListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class EnterpriseListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemEnterpriseImageView: ImageView =
             itemView.findViewById(R.id.itemEnterpriseImageView)
         private val itemEnterpriseNameTextView: TextView =
@@ -51,7 +48,6 @@ class EnterpriseListAdapter(
 
         fun bind(
             enterpriseResponse: EnterpriseResponse?,
-            context: Context,
             onEnterpriseItemClickListener: OnEnterpriseItemClickListener
         ) {
             itemEnterpriseCountryTextView.text = enterpriseResponse?.country
@@ -59,8 +55,7 @@ class EnterpriseListAdapter(
                 enterpriseResponse?.enterpriseTypeResponse?.enterpriseTypeName
             itemEnterpriseNameTextView.text = enterpriseResponse?.enterpriseName
             itemEnterpriseImageView.downloadImage(
-                Constants.BASE_IMAGE_URL + enterpriseResponse?.photo,
-                context
+                Constants.BASE_IMAGE_URL + enterpriseResponse?.photo
             )
             itemView.setOnClickListener { onEnterpriseItemClickListener.onClick(enterpriseResponse) }
         }
