@@ -10,9 +10,9 @@ import com.example.enterprises.R
 import com.example.enterprises.api.Api
 import com.example.enterprises.api.DataService
 import com.example.enterprises.constants.Constants
+import com.example.enterprises.domains.user.User
 import com.example.enterprises.domains.user.UserRequest
 import com.example.enterprises.extensions.createLoadingDialog
-import com.example.enterprises.extensions.isValidEmail
 import com.example.enterprises.extensions.showErrorDialog
 import com.google.android.material.textfield.TextInputLayout
 import okhttp3.ResponseBody
@@ -39,14 +39,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupLoginButton() {
         loginButton?.setOnClickListener {
-            val isEmptyPasswordField: Boolean = isEmptyField(
-                textInputLayout = loginPasswordTextInputLayout
+            val isEmptyPasswordField: Boolean = User.isValidPassword(
+                textInputLayout = loginPasswordTextInputLayout, this
             )
-            val isValidEmail: Boolean = isValidEmail(
-                typedEmail = loginEmailEditText?.text?.toString().orEmpty()
+            val isValidEmail: Boolean = User.isValidEmail(
+                typedEmail = loginEmailEditText?.text?.toString().orEmpty(),
+                loginEmailEditText,
+                this
             )
             if (isEmptyPasswordField || !isValidEmail) return@setOnClickListener
-
             val userRequest = UserRequest(
                 loginEmailEditText?.text?.toString().orEmpty(),
                 loginPasswordEditText?.text?.toString().orEmpty()
@@ -55,17 +56,6 @@ class LoginActivity : AppCompatActivity() {
             val dataService: DataService = Api.setupRetrofit().create(DataService::class.java)
             val call: Call<ResponseBody> = dataService.recoverVerifyLogin(userRequest)
             doLogin(call)
-        }
-    }
-
-    private fun isEmptyField(textInputLayout: TextInputLayout?): Boolean {
-        val typedText = textInputLayout?.editText?.text?.toString().orEmpty()
-        return if (typedText.isEmpty()) {
-            textInputLayout?.error = getString(R.string.fill_the_field)
-            true
-        } else {
-            textInputLayout?.error = Constants.EMPTY
-            false
         }
     }
 
@@ -121,22 +111,5 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         loginEmailTextInputLayout = findViewById(R.id.loginEmailTextInputLayout)
         loginPasswordTextInputLayout = findViewById(R.id.loginPasswordTextInputLayout)
-    }
-
-    private fun isValidEmail(typedEmail: String): Boolean {
-        return when {
-            typedEmail.isValidEmail() -> {
-                loginEmailTextInputLayout?.error = Constants.EMPTY
-                true
-            }
-            typedEmail.isEmpty() -> {
-                loginEmailTextInputLayout?.error = getString(R.string.fill_the_field)
-                false
-            }
-            else -> {
-                loginEmailTextInputLayout?.error = getString(R.string.incorrect_email)
-                false
-            }
-        }
     }
 }
