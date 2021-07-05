@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.enterprises.R
 import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
 import com.example.enterprises.constants.Constants
-import com.example.enterprises.domains.enterprise.EnterpriseResponse
+import com.example.enterprises.domains.enterprise.Enterprise
 import com.example.enterprises.extensions.downloadImage
 
 class EnterpriseListAdapter(
-    private val enterprises: List<EnterpriseResponse>?,
+    private val enterprises: List<Enterprise>,
     private val onEnterpriseItemClickListener: OnEnterpriseItemClickListener
 ) : RecyclerView.Adapter<EnterpriseListAdapter.EnterpriseListViewHolder>() {
     override fun onCreateViewHolder(
@@ -29,11 +29,11 @@ class EnterpriseListAdapter(
     }
 
     override fun onBindViewHolder(holder: EnterpriseListViewHolder, position: Int) {
-        holder.bind(enterprises?.get(position), onEnterpriseItemClickListener)
+        holder.bind(enterprises[position], onEnterpriseItemClickListener)
     }
 
     override fun getItemCount(): Int {
-        return enterprises?.size ?: 0
+        return enterprises.size
     }
 
     inner class EnterpriseListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,17 +47,17 @@ class EnterpriseListAdapter(
             itemView.findViewById(R.id.itemEnterpriseCountryTextView)
 
         fun bind(
-            enterpriseResponse: EnterpriseResponse?,
+            enterprise: Enterprise,
             onEnterpriseItemClickListener: OnEnterpriseItemClickListener
         ) {
-            itemEnterpriseCountryTextView.text = enterpriseResponse?.country
+            itemEnterpriseCountryTextView.text = enterprise.country
             itemEnterpriseTypeTextView.text =
-                enterpriseResponse?.enterpriseTypeResponse?.enterpriseTypeName
-            itemEnterpriseNameTextView.text = enterpriseResponse?.enterpriseName
+                enterprise.enterpriseType.enterpriseTypeName
+            itemEnterpriseNameTextView.text = enterprise.enterpriseName
             itemEnterpriseImageView.downloadImage(
-                Constants.BASE_IMAGE_URL + enterpriseResponse?.photo
+                Constants.BASE_IMAGE_URL + enterprise.photo
             )
-            itemView.setOnClickListener { onEnterpriseItemClickListener.onClick(enterpriseResponse) }
+            itemView.setOnClickListener { onEnterpriseItemClickListener.onClick(enterprise) }
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.example.enterprises.click.listener
 
-import com.example.enterprises.domains.enterprise.EnterpriseResponse
+import com.example.enterprises.domains.enterprise.Enterprise
+
 
 interface OnEnterpriseItemClickListener {
-    fun onClick(enterpriseResponse: EnterpriseResponse?)
+    fun onClick(enterprise: Enterprise)
 }

@@ -21,11 +21,10 @@
     <!--    menu.xml-->
     <string name="search_view">Pesquisar</string>
     <!--    Extensions -->
-    <string name="fill_the_field">Preencha o campo</string>
-    <string name="incorrect_email">Preencha o campo no formato de E-mail. Ex: abc@abc.com.br</string>
-    <!--    Utils -->
     <string name="alert_dialog_text">OK</string>
     <!--    Generics Error -->
+    <string name="fill_the_field">Preencha o campo</string>
+    <string name="incorrect_email">Preencha o campo no formato de E-mail. Ex: abc@abc.com.br</string>
     <string name="error_connection_fail">Falha na conexão com a internet, tente novamente.</string>
     <string name="occurred_error">Ocorreu um erro. Tente novamente mais tarde.</string>
     <string name="empty_list_error_message">Não foram encontrados resultados para esta pesquisa.</string>

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.enterprises.R
 import com.example.enterprises.constants.Constants
-import com.example.enterprises.domains.enterprise.EnterpriseResponse
+import com.example.enterprises.domains.enterprise.Enterprise
 import com.example.enterprises.extensions.downloadImage
 
 class ResultActivity : AppCompatActivity() {
@@ -20,16 +20,16 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
         findViewsById()
-        val enterpriseResponse = retrieverEnterpriseResponse()
-        setupToolBar(enterpriseResponse.enterpriseName)
-        showEnterpriseDetails(enterpriseResponse)
+        val enterprise = retrieverEnterprise()
+        setupToolBar(enterprise.enterpriseName)
+        showEnterpriseDetails(enterprise)
     }
 
-    private fun showEnterpriseDetails(enterpriseResponse: EnterpriseResponse) {
+    private fun showEnterpriseDetails(enterprise: Enterprise) {
         resultEnterpriseImageView?.downloadImage(
-            Constants.BASE_IMAGE_URL + enterpriseResponse.photo
+            Constants.BASE_IMAGE_URL + enterprise.photo
         )
-        resultDescriptionEnterpriseTextView?.text = enterpriseResponse.description
+        resultDescriptionEnterpriseTextView?.text = enterprise.description
     }
 
     private fun setupToolBar(enterpriseName: String?) {
@@ -38,8 +38,8 @@ class ResultActivity : AppCompatActivity() {
         supportActionBar?.title = enterpriseName
     }
 
-    private fun retrieverEnterpriseResponse(): EnterpriseResponse {
-        return intent.getSerializableExtra(Constants.ENTERPRISE_RESPONSE_DETAILS) as EnterpriseResponse
+    private fun retrieverEnterprise(): Enterprise {
+        return intent.getSerializableExtra(Constants.ENTERPRISE_DETAILS) as Enterprise
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

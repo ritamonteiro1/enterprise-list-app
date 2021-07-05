@@ -15,8 +15,7 @@ import com.example.enterprises.api.Api
 import com.example.enterprises.api.DataService
 import com.example.enterprises.click.listener.OnEnterpriseItemClickListener
 import com.example.enterprises.constants.Constants
-import com.example.enterprises.domains.enterprise.EnterpriseListResponse
-import com.example.enterprises.domains.enterprise.EnterpriseResponse
+import com.example.enterprises.domains.enterprise.*
 import com.example.enterprises.extensions.setGone
 import com.example.enterprises.extensions.setVisible
 import retrofit2.Call
@@ -92,19 +91,33 @@ class MainActivity : AppCompatActivity() {
     private fun getEnterpriseResponseSuccessfully(response: Response<EnterpriseListResponse>) {
         mainRecyclerView?.setVisible()
         val enterpriseListResponse: EnterpriseListResponse? = response.body()
-        treatEnterpriseListEmpty(enterpriseListResponse?.enterprises)
-        val enterpriseListAdapter =
-            EnterpriseListAdapter(
-                enterpriseListResponse?.enterprises,
-                object : OnEnterpriseItemClickListener {
-                    override fun onClick(enterpriseResponse: EnterpriseResponse?) {
-                        val intent = Intent(this@MainActivity, ResultActivity::class.java)
-                        intent.putExtra(Constants.ENTERPRISE_RESPONSE_DETAILS, enterpriseResponse)
-                        startActivity(intent)
-                    }
-                })
+        val enterpriseList = mapToEnterpriseList(enterpriseListResponse)
+
+        treatEnterpriseListEmpty(enterpriseList)
+        val enterpriseListAdapter = EnterpriseListAdapter(
+            enterpriseList,
+            object : OnEnterpriseItemClickListener {
+                override fun onClick(enterprise: Enterprise) {
+                    val intent = Intent(this@MainActivity, ResultActivity::class.java)
+                    intent.putExtra(Constants.ENTERPRISE_DETAILS, enterprise)
+                    startActivity(intent)
+                }
+            })
         setupRecyclerView(enterpriseListAdapter)
     }
+
+    private fun mapToEnterpriseList(enterpriseListResponse: EnterpriseListResponse?) =
+        enterpriseListResponse?.enterprises?.map { enterpriseResponse ->
+            Enterprise(
+                enterpriseResponse.enterpriseName.orEmpty(),
+                enterpriseResponse.photo.orEmpty(),
+                enterpriseResponse.description.orEmpty(),
+                enterpriseResponse.country.orEmpty(),
+                EnterpriseType(
+                    enterpriseResponse.enterpriseTypeResponse?.enterpriseTypeName.orEmpty()
+                )
+            )
+        } ?: emptyList()
 
     private fun setupRecyclerView(enterpriseListAdapter: EnterpriseListAdapter) {
         mainRecyclerView?.adapter = enterpriseListAdapter
@@ -114,8 +127,8 @@ class MainActivity : AppCompatActivity() {
         mainRecyclerView?.layoutManager = layoutManager
     }
 
-    private fun treatEnterpriseListEmpty(enterprises: List<EnterpriseResponse>?) {
-        if (enterprises?.isEmpty() == true) {
+    private fun treatEnterpriseListEmpty(enterprises: List<Enterprise>) {
+        if (enterprises.isEmpty()) {
             mainInformationTextView?.text = getString(R.string.empty_list_error_message)
             mainInformationTextView?.setVisible()
         }

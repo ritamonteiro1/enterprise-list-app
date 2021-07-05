@@ -10,6 +10,7 @@ import com.example.enterprises.R
 import com.example.enterprises.api.Api
 import com.example.enterprises.api.DataService
 import com.example.enterprises.constants.Constants
+import com.example.enterprises.domains.user.EmailStatus
 import com.example.enterprises.domains.user.User
 import com.example.enterprises.domains.user.UserRequest
 import com.example.enterprises.extensions.createLoadingDialog
@@ -39,19 +40,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupLoginButton() {
         loginButton?.setOnClickListener {
-            val isEmptyPasswordField: Boolean = User.isValidPassword(
-                textInputLayout = loginPasswordTextInputLayout, this
-            )
-            val isValidEmail: Boolean = User.isValidEmail(
-                typedEmail = loginEmailEditText?.text?.toString().orEmpty(),
-                loginEmailEditText,
-                this
-            )
-            if (isEmptyPasswordField || !isValidEmail) return@setOnClickListener
-            val userRequest = UserRequest(
+            val user = User(
                 loginEmailEditText?.text?.toString().orEmpty(),
                 loginPasswordEditText?.text?.toString().orEmpty()
             )
+            val isValidPassword: Boolean = user.isValidPassword()
+            treatInvalidPassword(isValidPassword)
+            val isValidEmail: EmailStatus = user.isValidEmail()
+            treatInvalidEmail(isValidEmail)
+            if (!isValidPassword || isValidEmail != EmailStatus.VALID) return@setOnClickListener
+            val userRequest = UserRequest(user.email, user.password)
             loadingDialog?.show()
             val dataService: DataService = Api.setupRetrofit().create(DataService::class.java)
             val call: Call<ResponseBody> = dataService.recoverVerifyLogin(userRequest)
@@ -59,23 +57,32 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun treatInvalidEmail(isValidEmail: EmailStatus) {
+        when (isValidEmail) {
+            EmailStatus.VALID -> {
+                loginEmailTextInputLayout?.error = Constants.EMPTY
+            }
+            EmailStatus.EMPTY -> {
+                loginEmailTextInputLayout?.error = getString(R.string.fill_the_field)
+            }
+            else -> {
+                loginEmailTextInputLayout?.error = getString(R.string.incorrect_email)
+            }
+        }
+    }
+
+    private fun treatInvalidPassword(isValidPassword: Boolean) {
+        if (isValidPassword) {
+            loginPasswordTextInputLayout?.error = Constants.EMPTY
+        } else {
+            loginPasswordTextInputLayout?.error = getString(R.string.fill_the_field)
+        }
+    }
+
     private fun doLogin(call: Call<ResponseBody>) {
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                loadingDialog?.dismiss()
-                when {
-                    response.isSuccessful -> {
-                        onSuccessLoginResponse(response)
-                    }
-                    response.code() == HttpURLConnection.HTTP_UNAUTHORIZED -> {
-                        loginEmailTextInputLayout?.error = Constants.BLANK_SPACE
-                        loginPasswordTextInputLayout?.error =
-                            getString(R.string.login_error_email_password)
-                    }
-                    else -> {
-                        showErrorDialog(getString(R.string.occurred_error))
-                    }
-                }
+                doLoginOnResponse(response)
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -84,6 +91,23 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         )
+    }
+
+    private fun doLoginOnResponse(response: Response<ResponseBody>) {
+        loadingDialog?.dismiss()
+        when {
+            response.isSuccessful -> {
+                onSuccessLoginResponse(response)
+            }
+            response.code() == HttpURLConnection.HTTP_UNAUTHORIZED -> {
+                loginEmailTextInputLayout?.error = Constants.BLANK_SPACE
+                loginPasswordTextInputLayout?.error =
+                    getString(R.string.login_error_email_password)
+            }
+            else -> {
+                showErrorDialog(getString(R.string.occurred_error))
+            }
+        }
     }
 
     private fun onSuccessLoginResponse(response: Response<ResponseBody>) {
